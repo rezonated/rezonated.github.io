@@ -228,7 +228,7 @@ function gameOver() {
 //Event listener
 //Typing
 text.addEventListener('input', (e) => {
-  const insertedText = e.target.value;
+  const insertedText = e.target.value.toLowerCase();
   if (insertedText === randomWord) {
     addWordToDOM();
     updateScore();
