@@ -158,7 +158,7 @@ let score = 0;
 //Init time
 let time = 10;
 //Word count
-let count = 1;
+let count = 0;
 //Set difficulty from local storage or medium
 let difficulty =
   localStorage.getItem('difficulty') !== null
@@ -190,9 +190,10 @@ function getRandomWord(array) {
 }
 //Store the randomized array
 let wordArray = getRandomWord(words);
+console.log(wordArray);
 //Update score
 function updateScore() {
-  count++;
+  ++count;
   score++;
   scoreEl.innerHTML = score;
   if (count == words.length) {
@@ -202,7 +203,11 @@ function updateScore() {
 //Add word to DOM
 function addWordToDOM() {
   //randomWord = getRandomWord();
-  randomWord = wordArray[count];
+  if (count == 0) {
+    randomWord = wordArray[count++];
+  } else {
+    randomWord = wordArray[count];
+  }
   word.innerHTML = randomWord;
 }
 addWordToDOM();
