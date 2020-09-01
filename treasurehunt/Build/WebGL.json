@@ -1,6 +1,6 @@
 {
 "companyName": "DefaultCompany",
-"productName": "TreasureHunt-WebRTC",
+"productName": "NHB Treasure Hunt",
 "productVersion": "0.1",
 "dataUrl": "WebGL.data.unityweb",
 "wasmCodeUrl": "WebGL.wasm.code.unityweb",
@@ -10,7 +10,7 @@
 "splashScreenStyle": "Dark",
 "backgroundColor": "#231F20",
 "cacheControl": {"default": "must-revalidate"},
-"developmentBuild": true,
+"developmentBuild": false,
 "multithreading": false,
-"unityVersion": "2019.4.8f1"
+"unityVersion": "2019.2.8f1"
 }
