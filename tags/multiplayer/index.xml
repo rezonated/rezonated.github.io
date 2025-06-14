@@ -1,4 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Multiplayer on V's personal site</title><link>https://rezonated.github.io/tags/multiplayer/</link><description>Recent content in Multiplayer on V's personal site</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Fri, 13 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://rezonated.github.io/tags/multiplayer/index.xml" rel="self" type="application/rss+xml"/><item><title>Networked Deterministic Array Shuffle in Unreal Engine</title><link>https://rezonated.github.io/posts/deterministic_shuffle/</link><pubDate>Fri, 13 Jun 2025 00:00:00 +0000</pubDate><guid>https://rezonated.github.io/posts/deterministic_shuffle/</guid><description>&lt;h1 class="heading" id="introduction">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Multiplayer on V's personal site</title><link>https://rezonated.github.io/tags/multiplayer/</link><description>Recent content in Multiplayer on V's personal site</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sat, 14 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://rezonated.github.io/tags/multiplayer/index.xml" rel="self" type="application/rss+xml"/><item><title>Approaches to replicate Unreal Engine's TMap</title><link>https://rezonated.github.io/posts/tmap_replication/</link><pubDate>Sat, 14 Jun 2025 00:00:00 +0000</pubDate><guid>https://rezonated.github.io/posts/tmap_replication/</guid><description>&lt;h1 class="heading" id="introduction">
+ Introduction
+ &lt;a class="anchor" href="#introduction">#&lt;/a>
+&lt;/h1>
+&lt;p>If you ever attempt to put a &lt;code>Replicated&lt;/code> specifier on your &lt;code>UPROPERTY&lt;/code> with &lt;code>TMap&lt;/code>, your IDE or compiler might yell at you like this:&lt;/p>
+&lt;p>
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure class="">
+
+ &lt;div class="img-container" >
+ &lt;img loading="lazy" alt="TMap Replication Attempt" src="https://rezonated.github.io/posts/tmap_replication/tmap_doesnt_support_replication.png" >
+ &lt;/div>
+
+ 
+ &lt;div class="caption-container">
+ &lt;figcaption> Replication maps are not supported? &lt;/figcaption>
+ &lt;/div>
+ 
+&lt;/figure>
+&lt;/p>
+&lt;h1 class="heading" id="why-cant-tmap-be-replicated-by-unreal">
+ Why can&amp;rsquo;t TMap be replicated by Unreal?
+ &lt;a class="anchor" href="#why-cant-tmap-be-replicated-by-unreal">#&lt;/a>
+&lt;/h1>
+&lt;p>Unreal&amp;rsquo;s built-in replication only supports certain types that the replication system knows how to serialize. This includes basic primitives, some containers like &lt;code>TArray&lt;/code>, &lt;code>FVector&lt;/code>, or custom structs containing &lt;code>UPROPERTY&lt;/code> fields.&lt;/p></description></item><item><title>Networked Deterministic Array Shuffle in Unreal Engine</title><link>https://rezonated.github.io/posts/deterministic_shuffle/</link><pubDate>Fri, 13 Jun 2025 00:00:00 +0000</pubDate><guid>https://rezonated.github.io/posts/deterministic_shuffle/</guid><description>&lt;h1 class="heading" id="introduction">
  Introduction
  &lt;a class="anchor" href="#introduction">#&lt;/a>
 &lt;/h1>
