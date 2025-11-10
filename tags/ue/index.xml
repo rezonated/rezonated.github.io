@@ -2,8 +2,8 @@
  Introduction
  &lt;a class="anchor" href="#introduction">#&lt;/a>
 &lt;/h1>
-&lt;p>Boids and flocking simulations offer a fascinating way to generate emergent behavior from simple rules. A common application is adding life to game worlds, for instance, by simulating a school of fish. However, a significant technical challenge arises when scaling up to large numbers. The target here was to effectively simulate a school of 1000 fish.&lt;/p>
-&lt;p>The initial implementation used an &lt;code>AActor_Fish&lt;/code> class with basic boids logic. When spawning 1000 instances, performance was around 6 FPS.&lt;/p></description></item><item><title>TNonNullPtr: UE's bouncer for null pointers!</title><link>https://rezonated.github.io/posts/tnonnullptr/</link><pubDate>Sat, 08 Nov 2025 00:00:00 +0000</pubDate><guid>https://rezonated.github.io/posts/tnonnullptr/</guid><description>&lt;h1 class="heading" id="introduction">
+&lt;p>The mesmerizing dance of a starling murmuration or the synchronized ballet of a fish school seems guided by a single, intelligent mind. Yet, this complex, life-like motion isn&amp;rsquo;t orchestrated by a leader; it&amp;rsquo;s an emergent phenomenon. This is what the Boids algorithm, created by Craig Reynolds in 1986, so elegantly captures: the idea that sophisticated group behavior can arise from individuals following a few simple rules.&lt;/p>
+&lt;p>This principle offers a fascinating way to add life to game worlds. A common application is simulating a school of fish, but a significant technical challenge arises when scaling up to large numbers. The target here was to effectively simulate a school of 1000 fish, moving as one cohesive unit while still allowing for individual interaction.&lt;/p></description></item><item><title>TNonNullPtr: UE's bouncer for null pointers!</title><link>https://rezonated.github.io/posts/tnonnullptr/</link><pubDate>Sat, 08 Nov 2025 00:00:00 +0000</pubDate><guid>https://rezonated.github.io/posts/tnonnullptr/</guid><description>&lt;h1 class="heading" id="introduction">
  Introduction
  &lt;a class="anchor" href="#introduction">#&lt;/a>
 &lt;/h1>
