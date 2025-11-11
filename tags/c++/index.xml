@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>C++ on V's personal site</title><link>https://rezonated.github.io/tags/c++/</link><description>Recent content in C++ on V's personal site</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 10 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://rezonated.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml"/><item><title>Simulating 1000 flocking fish in Unreal Engine</title><link>https://rezonated.github.io/posts/1000_boids/</link><pubDate>Mon, 10 Nov 2025 00:00:00 +0000</pubDate><guid>https://rezonated.github.io/posts/1000_boids/</guid><description>&lt;h1 class="heading" id="introduction">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>C++ on V's personal site</title><link>https://rezonated.github.io/tags/c++/</link><description>Recent content in C++ on V's personal site</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Tue, 11 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://rezonated.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml"/><item><title>Simulating 1000 flocking fish in Unreal Engine</title><link>https://rezonated.github.io/posts/1000_boids/</link><pubDate>Tue, 11 Nov 2025 00:00:00 +0000</pubDate><guid>https://rezonated.github.io/posts/1000_boids/</guid><description>&lt;h1 class="heading" id="introduction">
  Introduction
  &lt;a class="anchor" href="#introduction">#&lt;/a>
 &lt;/h1>
@@ -31,27 +31,12 @@
 
 
 
-
-
-
-
-
-
-
-
-&lt;figure class="">
-
- &lt;div class="img-container" >
- &lt;img loading="lazy" alt="TMap Replication Attempt" src="https://rezonated.github.io/posts/tmap_replication/tmap_doesnt_support_replication.png" >
- &lt;/div>
-
+&lt;p>
+ &lt;img src="https://rezonated.github.io/posts/tmap_replication/tmap_doesnt_support_replication.png" 
+ alt="TMap Replication Attempt" 
  
- &lt;div class="caption-container">
- &lt;figcaption> Replication maps are not supported? &lt;/figcaption>
- &lt;/div>
- 
-&lt;/figure>
-&lt;/p>
+ title="Replication maps are not supported?" />
+&lt;/p>&lt;/p>
 &lt;h1 class="heading" id="why-cant-tmap-be-replicated-by-unreal">
  Why can&amp;rsquo;t TMap be replicated by Unreal?
  &lt;a class="anchor" href="#why-cant-tmap-be-replicated-by-unreal">#&lt;/a>
@@ -65,25 +50,10 @@
 
 
 
-
-
-
-
-
-
-
-
-&lt;figure class="">
-
- &lt;div class="img-container" >
- &lt;img loading="lazy" alt="Spin the Wheel - Coral Island" src="https://rezonated.github.io/posts/deterministic_shuffle/spin_the_wheel.png" >
- &lt;/div>
-
+&lt;p>
+ &lt;img src="https://rezonated.github.io/posts/deterministic_shuffle/spin_the_wheel.png" 
+ alt="Spin the Wheel - Coral Island" 
  
- &lt;div class="caption-container">
- &lt;figcaption> One of festival minigames that players can play in Coral Island &lt;/figcaption>
- &lt;/div>
- 
-&lt;/figure>
-&lt;/p>
+ title="One of festival minigames that players can play in Coral Island" />
+&lt;/p>&lt;/p>
 &lt;p>At the time this feature was developed, it hadn&amp;rsquo;t yet been made to work with multiplayer. Even though Coral Island is a co-op game, not a competitive one, Unreal Engine still adopts a server-authoritative multiplayer model.&lt;/p></description></item></channel></rss>

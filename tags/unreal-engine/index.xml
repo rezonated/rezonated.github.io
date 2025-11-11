@@ -7,25 +7,10 @@
 
 
 
-
-
-
-
-
-
-
-
-&lt;figure class="">
-
- &lt;div class="img-container" >
- &lt;img loading="lazy" alt="Spin the Wheel - Coral Island" src="https://rezonated.github.io/posts/deterministic_shuffle/spin_the_wheel.png" >
- &lt;/div>
-
+&lt;p>
+ &lt;img src="https://rezonated.github.io/posts/deterministic_shuffle/spin_the_wheel.png" 
+ alt="Spin the Wheel - Coral Island" 
  
- &lt;div class="caption-container">
- &lt;figcaption> One of festival minigames that players can play in Coral Island &lt;/figcaption>
- &lt;/div>
- 
-&lt;/figure>
-&lt;/p>
+ title="One of festival minigames that players can play in Coral Island" />
+&lt;/p>&lt;/p>
 &lt;p>At the time this feature was developed, it hadn&amp;rsquo;t yet been made to work with multiplayer. Even though Coral Island is a co-op game, not a competitive one, Unreal Engine still adopts a server-authoritative multiplayer model.&lt;/p></description></item></channel></rss>
