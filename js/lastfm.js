@@ -17,7 +17,7 @@ $(document).ready(function () {
         params['api_key'] = API_KEY;
         params['format'] = "json";
 
-        return fetch("https://ws.audioscrobbler.com/2.0/?method=" + method + "&" + urlencode(params) + "&format=json")
+        return fetch("https://ws.audioscrobbler.com/2.0/?method=" + method + "&" + urlencode(params))
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -26,25 +26,42 @@ $(document).ready(function () {
             });
     }
 
+    function extractFirstValidImage(images) {
+        for (var i = images.length - 1; i >= 0; i--) {
+            var txt = images[i]["#text"];
+            if (txt && txt.length > 0) return txt;
+        }
+        return "";
+    }
+
     function getImage(trackinfo) {
         return lastfmRequest("track.getInfo", { autocorrect: 1, track: trackinfo["name"], artist: trackinfo["artist"]["name"] })
             .then((data) => {
                 try {
-                    var img = data.track.album.image[1]["#text"];
-                    if (img && img.length > 0) return img;
+                    var img = extractFirstValidImage(data.track.album.image);
+                    console.log("track.getInfo album image for", trackinfo["name"], img);
+                    if (img) return img;
                     throw new Error("No album image");
                 } catch(e) {
                     throw new Error(e);
                 }
             })
-            .catch(() => {
+            .catch((err) => {
+                console.log("track.getInfo failed for", trackinfo["name"], "- trying artist fallback");
                 return lastfmRequest("artist.getInfo", { autocorrect: 1, artist: trackinfo["artist"]["name"] })
                     .then((data) => {
                         try {
-                            return data.artist.image[1]["#text"];
+                            var img = extractFirstValidImage(data.artist.image);
+                            console.log("artist.getInfo image for", trackinfo["artist"]["name"], img);
+                            if (img) return img;
+                            return "";
                         } catch(e) {
                             return "";
                         }
+                    })
+                    .catch(() => {
+                        console.log("artist.getInfo also failed for", trackinfo["artist"]["name"]);
+                        return "";
                     });
             });
     }
@@ -53,13 +70,20 @@ $(document).ready(function () {
         var html = '<h3 class="colorchanger">Top 3 Tracks This Week</h2>';
         $.each(data.toptracks.track, function (i, item) {
             const itemid = item.mbid || ("track-" + i);
+            var initialSrc = extractFirstValidImage(item.image);
+            if (!initialSrc) initialSrc = item.image[1]["#text"];
 
             html += '<div class="music-row">';
-            html += '<img id="' + itemid + '" src="' + item.image[1]["#text"] + '">';
+            html += '<img id="' + itemid + '" src="' + initialSrc + '">';
             html += '<div><a href="' + item.url + '" target="_blank">' + item.name + '</a> - ' + item.artist['name'] + '</div></div>';
 
             getImage(item).then((img) => {
-                $("#" + itemid).attr("src", img);
+                console.log("getImage resolved for top track", itemid, item.name, img);
+                if (img && img.length > 0) {
+                    $("#" + itemid).attr("src", img);
+                }
+            }).catch((err) => {
+                console.log("getImage rejected for top track", itemid, item.name, err);
             });
         });
         displayMusic();
@@ -77,13 +101,20 @@ $(document).ready(function () {
         let html = '<h3 class="colorchanger">Now Playing</h2>';
 
         const itemid = item.mbid || "now-playing";
+        var initialSrc = extractFirstValidImage(item.image);
+        if (!initialSrc) initialSrc = item.image[1]["#text"];
 
         html += '<div class="music-row">';
-        html += '<img id="' + itemid + '" src="' + item.image[1]["#text"] + '">';
+        html += '<img id="' + itemid + '" src="' + initialSrc + '">';
         html += '<div><a href="' + item.url + '" target="_blank">' + item.name + '</a> - ' + item.artist['#text'] + '</div></div>';
 
         getImage({ name: item["name"], artist: { name: item["artist"]["#text"] } }).then((img) => {
-            $("#" + itemid).attr("src", img);
+            console.log("getImage resolved for now-playing", img);
+            if (img && img.length > 0) {
+                $("#" + itemid).attr("src", img);
+            }
+        }).catch((err) => {
+            console.log("getImage rejected for now-playing", err);
         });
 
         displayMusic();
