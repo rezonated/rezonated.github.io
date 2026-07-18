@@ -52,7 +52,7 @@ $(document).ready(function () {
     lastfmRequest("user.gettoptracks", { user: USERNAME, limit: "3", period: "7day" }).then((data) => {
         var html = '<h3 class="colorchanger">Top 3 Tracks This Week</h2>';
         $.each(data.toptracks.track, function (i, item) {
-            const itemid = item.mbid;
+            const itemid = item.mbid || ("track-" + i);
 
             html += '<div class="music-row">';
             html += '<img id="' + itemid + '" src="' + item.image[1]["#text"] + '">';
@@ -76,7 +76,7 @@ $(document).ready(function () {
 
         let html = '<h3 class="colorchanger">Now Playing</h2>';
 
-        const itemid = item.mbid;
+        const itemid = item.mbid || "now-playing";
 
         html += '<div class="music-row">';
         html += '<img id="' + itemid + '" src="' + item.image[1]["#text"] + '">';
