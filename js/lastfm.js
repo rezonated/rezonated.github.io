@@ -29,12 +29,24 @@ $(document).ready(function () {
     function getImage(trackinfo) {
         return lastfmRequest("track.getInfo", { autocorrect: 1, track: trackinfo["name"], artist: trackinfo["artist"]["name"] })
             .then((data) => {
-                    try {
-                        return data.track.album.image[1]["#text"];
-                    } catch(e) {
-                        throw new Error(e)
-                    }
-                });
+                try {
+                    var img = data.track.album.image[1]["#text"];
+                    if (img && img.length > 0) return img;
+                    throw new Error("No album image");
+                } catch(e) {
+                    throw new Error(e);
+                }
+            })
+            .catch(() => {
+                return lastfmRequest("artist.getInfo", { autocorrect: 1, artist: trackinfo["artist"]["name"] })
+                    .then((data) => {
+                        try {
+                            return data.artist.image[1]["#text"];
+                        } catch(e) {
+                            return "";
+                        }
+                    });
+            });
     }
 
     lastfmRequest("user.gettoptracks", { user: USERNAME, limit: "3", period: "7day" }).then((data) => {
