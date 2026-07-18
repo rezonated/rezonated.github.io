@@ -34,7 +34,8 @@ $(document).ready(function () {
 
     function deezerImageSearch(track, artist) {
         var query = encodeURIComponent(track + " " + artist);
-        return fetch("https://api.deezer.com/search/track?q=" + query + "&limit=1")
+        var target = "https://api.deezer.com/search/track?q=" + query + "&limit=1";
+        return fetch("https://img-proxy.rezonated.workers.dev/?url=" + encodeURIComponent(target))
             .then((response) => {
                 if (response.ok) return response.json();
                 throw new Error("Deezer search failed");
