@@ -57,7 +57,6 @@ $(document).ready(function () {
             .then((data) => {
                 try {
                     var img = data.track.album.image[1]["#text"];
-                    console.log("track.getInfo album image for", trackinfo["name"], img);
                     if (img && !isPlaceholder(img)) return img;
                     throw new Error("No album image");
                 } catch(e) {
@@ -65,12 +64,10 @@ $(document).ready(function () {
                 }
             })
             .catch((err) => {
-                console.log("track.getInfo failed for", trackinfo["name"], "- trying artist fallback");
                 return lastfmRequest("artist.getInfo", { autocorrect: 1, artist: trackinfo["artist"]["name"] })
                     .then((data) => {
                         try {
                             var img = data.artist.image[1]["#text"];
-                            console.log("artist.getInfo image for", trackinfo["artist"]["name"], img);
                             if (img && !isPlaceholder(img)) return img;
                             throw new Error("No artist image");
                         } catch(e) {
@@ -79,10 +76,8 @@ $(document).ready(function () {
                     });
             })
             .catch((err) => {
-                console.log("Last.fm failed for", trackinfo["name"], "- trying Deezer");
                 return deezerImageSearch(trackinfo["name"], trackinfo["artist"]["name"])
                     .then((img) => {
-                        console.log("Deezer image for", trackinfo["name"], img);
                         if (img && !isPlaceholder(img)) return img;
                         return FALLBACK_IMG;
                     });
@@ -104,10 +99,7 @@ $(document).ready(function () {
             html += '</div></div>';
 
             getImage(item).then((img) => {
-                console.log("getImage resolved for top track", itemid, item.name, img);
                 $("#" + itemid).attr("src", img);
-            }).catch((err) => {
-                console.log("getImage rejected for top track", itemid, item.name, err);
             });
         });
         displayMusic();
@@ -115,8 +107,6 @@ $(document).ready(function () {
     });
 
     lastfmRequest("user.getrecenttracks", { user: USERNAME, limit: 1 }).then((data) => {
-        console.log(data);
-
         var item = data.recenttracks.track[0];
         if (!item["@attr"] || !item["@attr"].nowplaying) {
             return;
@@ -137,10 +127,7 @@ $(document).ready(function () {
         html += '</div></div>';
 
         getImage({ name: item["name"], artist: { name: item["artist"]["#text"] } }).then((img) => {
-            console.log("getImage resolved for now-playing", img);
             $("#" + itemid).attr("src", img);
-        }).catch((err) => {
-            console.log("getImage rejected for now-playing", err);
         });
 
         displayMusic();
