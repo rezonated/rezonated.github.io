@@ -32,17 +32,17 @@ $(document).ready(function () {
         return !url || url.length === 0 || url.indexOf(PLACEHOLDER_HASH) !== -1;
     }
 
-    function itunesImageSearch(track, artist) {
-        var query = encodeURIComponent(track + " " + artist);
-        return fetch("https://itunes.apple.com/search?term=" + query + "&entity=song&limit=1")
+    function deezerImageSearch(track, artist) {
+        var query = "artist:\"" + encodeURIComponent(artist) + "\" track:\"" + encodeURIComponent(track) + "\"";
+        return fetch("https://api.deezer.com/search/track?q=" + query + "&limit=1")
             .then((response) => {
                 if (response.ok) return response.json();
-                throw new Error("iTunes search failed");
+                throw new Error("Deezer search failed");
             })
             .then((data) => {
-                if (data.results && data.results.length > 0) {
-                    var art = data.results[0].artworkUrl100;
-                    if (art) return art.replace("100x100bb", "64x64bb");
+                if (data.data && data.data.length > 0) {
+                    var art = data.data[0].album.cover_medium;
+                    if (art) return art;
                 }
                 return "";
             })
@@ -78,10 +78,10 @@ $(document).ready(function () {
                     });
             })
             .catch((err) => {
-                console.log("Last.fm failed for", trackinfo["name"], "- trying iTunes");
-                return itunesImageSearch(trackinfo["name"], trackinfo["artist"]["name"])
+                console.log("Last.fm failed for", trackinfo["name"], "- trying Deezer");
+                return deezerImageSearch(trackinfo["name"], trackinfo["artist"]["name"])
                     .then((img) => {
-                        console.log("iTunes image for", trackinfo["name"], img);
+                        console.log("Deezer image for", trackinfo["name"], img);
                         if (img && !isPlaceholder(img)) return img;
                         return FALLBACK_IMG;
                     });
