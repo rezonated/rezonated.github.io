@@ -52,14 +52,14 @@ $(document).ready(function () {
                             var img = data.artist.image[1]["#text"];
                             console.log("artist.getInfo image for", trackinfo["artist"]["name"], img);
                             if (img && !isPlaceholder(img)) return img;
-                            return "";
+                            return FALLBACK_IMG;
                         } catch(e) {
-                            return "";
+                            return FALLBACK_IMG;
                         }
                     })
                     .catch(() => {
                         console.log("artist.getInfo also failed for", trackinfo["artist"]["name"]);
-                        return "";
+                        return FALLBACK_IMG;
                     });
             });
     }
@@ -69,7 +69,6 @@ $(document).ready(function () {
         $.each(data.toptracks.track, function (i, item) {
             const itemid = item.mbid || ("track-" + i);
             var initialSrc = item.image[1]["#text"];
-            if (isPlaceholder(initialSrc)) initialSrc = FALLBACK_IMG;
 
             html += '<div class="music-row">';
             html += '<img id="' + itemid + '" src="' + initialSrc + '">';
@@ -77,9 +76,7 @@ $(document).ready(function () {
 
             getImage(item).then((img) => {
                 console.log("getImage resolved for top track", itemid, item.name, img);
-                if (img && !isPlaceholder(img)) {
-                    $("#" + itemid).attr("src", img);
-                }
+                $("#" + itemid).attr("src", img);
             }).catch((err) => {
                 console.log("getImage rejected for top track", itemid, item.name, err);
             });
@@ -100,7 +97,6 @@ $(document).ready(function () {
 
         const itemid = item.mbid || "now-playing";
         var initialSrc = item.image[1]["#text"];
-        if (isPlaceholder(initialSrc)) initialSrc = FALLBACK_IMG;
 
         html += '<div class="music-row">';
         html += '<img id="' + itemid + '" src="' + initialSrc + '">';
@@ -108,9 +104,7 @@ $(document).ready(function () {
 
         getImage({ name: item["name"], artist: { name: item["artist"]["#text"] } }).then((img) => {
             console.log("getImage resolved for now-playing", img);
-            if (img && !isPlaceholder(img)) {
-                $("#" + itemid).attr("src", img);
-            }
+            $("#" + itemid).attr("src", img);
         }).catch((err) => {
             console.log("getImage rejected for now-playing", err);
         });
