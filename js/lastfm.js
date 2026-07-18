@@ -1,5 +1,7 @@
 const API_KEY = "2efc84e6ddb63a972b5156001674a445";
 const USERNAME = "crewsackan";
+const PLACEHOLDER_HASH = "2a96cbd8b46e442fc41c2b86b821562f";
+const FALLBACK_IMG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='6' fill='%232a2a2a'/%3E%3Ctext x='32' y='42' text-anchor='middle' fill='%23555' font-size='28' font-family='sans-serif'%3E%E2%99%AB%3C/text%3E%3C/svg%3E";
 
 function urlencode(obj) {
     var str = [];
@@ -26,21 +28,17 @@ $(document).ready(function () {
             });
     }
 
-    function extractFirstValidImage(images) {
-        for (var i = images.length - 1; i >= 0; i--) {
-            var txt = images[i]["#text"];
-            if (txt && txt.length > 0) return txt;
-        }
-        return "";
+    function isPlaceholder(url) {
+        return !url || url.length === 0 || url.indexOf(PLACEHOLDER_HASH) !== -1;
     }
 
     function getImage(trackinfo) {
         return lastfmRequest("track.getInfo", { autocorrect: 1, track: trackinfo["name"], artist: trackinfo["artist"]["name"] })
             .then((data) => {
                 try {
-                    var img = extractFirstValidImage(data.track.album.image);
+                    var img = data.track.album.image[1]["#text"];
                     console.log("track.getInfo album image for", trackinfo["name"], img);
-                    if (img) return img;
+                    if (img && !isPlaceholder(img)) return img;
                     throw new Error("No album image");
                 } catch(e) {
                     throw new Error(e);
@@ -51,9 +49,9 @@ $(document).ready(function () {
                 return lastfmRequest("artist.getInfo", { autocorrect: 1, artist: trackinfo["artist"]["name"] })
                     .then((data) => {
                         try {
-                            var img = extractFirstValidImage(data.artist.image);
+                            var img = data.artist.image[1]["#text"];
                             console.log("artist.getInfo image for", trackinfo["artist"]["name"], img);
-                            if (img) return img;
+                            if (img && !isPlaceholder(img)) return img;
                             return "";
                         } catch(e) {
                             return "";
@@ -70,8 +68,8 @@ $(document).ready(function () {
         var html = '<h3 class="colorchanger">Top 3 Tracks This Week</h2>';
         $.each(data.toptracks.track, function (i, item) {
             const itemid = item.mbid || ("track-" + i);
-            var initialSrc = extractFirstValidImage(item.image);
-            if (!initialSrc) initialSrc = item.image[1]["#text"];
+            var initialSrc = item.image[1]["#text"];
+            if (isPlaceholder(initialSrc)) initialSrc = FALLBACK_IMG;
 
             html += '<div class="music-row">';
             html += '<img id="' + itemid + '" src="' + initialSrc + '">';
@@ -79,7 +77,7 @@ $(document).ready(function () {
 
             getImage(item).then((img) => {
                 console.log("getImage resolved for top track", itemid, item.name, img);
-                if (img && img.length > 0) {
+                if (img && !isPlaceholder(img)) {
                     $("#" + itemid).attr("src", img);
                 }
             }).catch((err) => {
@@ -101,8 +99,8 @@ $(document).ready(function () {
         let html = '<h3 class="colorchanger">Now Playing</h2>';
 
         const itemid = item.mbid || "now-playing";
-        var initialSrc = extractFirstValidImage(item.image);
-        if (!initialSrc) initialSrc = item.image[1]["#text"];
+        var initialSrc = item.image[1]["#text"];
+        if (isPlaceholder(initialSrc)) initialSrc = FALLBACK_IMG;
 
         html += '<div class="music-row">';
         html += '<img id="' + itemid + '" src="' + initialSrc + '">';
@@ -110,7 +108,7 @@ $(document).ready(function () {
 
         getImage({ name: item["name"], artist: { name: item["artist"]["#text"] } }).then((img) => {
             console.log("getImage resolved for now-playing", img);
-            if (img && img.length > 0) {
+            if (img && !isPlaceholder(img)) {
                 $("#" + itemid).attr("src", img);
             }
         }).catch((err) => {
