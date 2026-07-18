@@ -94,10 +94,14 @@ $(document).ready(function () {
         $.each(data.toptracks.track, function (i, item) {
             const itemid = item.mbid || ("track-" + i);
             var initialSrc = item.image[1]["#text"];
+            var artistUrl = item.artist.url || ("https://www.last.fm/music/" + encodeURIComponent(item.artist.name));
 
             html += '<div class="music-row">';
             html += '<img id="' + itemid + '" src="' + initialSrc + '">';
-            html += '<div><a href="' + item.url + '" target="_blank">' + item.name + '</a> - ' + item.artist['name'] + '</div></div>';
+            html += '<div class="music-info">';
+            html += '<a class="music-track" href="' + item.url + '" target="_blank">' + item.name + '</a>';
+            html += '<a class="music-artist" href="' + artistUrl + '" target="_blank">' + item.artist.name + '</a>';
+            html += '</div></div>';
 
             getImage(item).then((img) => {
                 console.log("getImage resolved for top track", itemid, item.name, img);
@@ -122,10 +126,15 @@ $(document).ready(function () {
 
         const itemid = item.mbid || "now-playing";
         var initialSrc = item.image[1]["#text"];
+        var artistName = item.artist["#text"];
+        var artistUrl = "https://www.last.fm/music/" + encodeURIComponent(artistName);
 
         html += '<div class="music-row">';
         html += '<img id="' + itemid + '" src="' + initialSrc + '">';
-        html += '<div><a href="' + item.url + '" target="_blank">' + item.name + '</a> - ' + item.artist['#text'] + '</div></div>';
+        html += '<div class="music-info">';
+        html += '<a class="music-track" href="' + item.url + '" target="_blank">' + item.name + '</a>';
+        html += '<a class="music-artist" href="' + artistUrl + '" target="_blank">' + artistName + '</a>';
+        html += '</div></div>';
 
         getImage({ name: item["name"], artist: { name: item["artist"]["#text"] } }).then((img) => {
             console.log("getImage resolved for now-playing", img);
