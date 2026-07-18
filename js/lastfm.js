@@ -32,6 +32,25 @@ $(document).ready(function () {
         return !url || url.length === 0 || url.indexOf(PLACEHOLDER_HASH) !== -1;
     }
 
+    function itunesImageSearch(track, artist) {
+        var query = encodeURIComponent(track + " " + artist);
+        return fetch("https://itunes.apple.com/search?term=" + query + "&entity=song&limit=1")
+            .then((response) => {
+                if (response.ok) return response.json();
+                throw new Error("iTunes search failed");
+            })
+            .then((data) => {
+                if (data.results && data.results.length > 0) {
+                    var art = data.results[0].artworkUrl100;
+                    if (art) return art.replace("100x100bb", "64x64bb");
+                }
+                return "";
+            })
+            .catch(() => {
+                return "";
+            });
+    }
+
     function getImage(trackinfo) {
         return lastfmRequest("track.getInfo", { autocorrect: 1, track: trackinfo["name"], artist: trackinfo["artist"]["name"] })
             .then((data) => {
@@ -52,13 +71,18 @@ $(document).ready(function () {
                             var img = data.artist.image[1]["#text"];
                             console.log("artist.getInfo image for", trackinfo["artist"]["name"], img);
                             if (img && !isPlaceholder(img)) return img;
-                            return FALLBACK_IMG;
+                            throw new Error("No artist image");
                         } catch(e) {
-                            return FALLBACK_IMG;
+                            throw new Error(e);
                         }
-                    })
-                    .catch(() => {
-                        console.log("artist.getInfo also failed for", trackinfo["artist"]["name"]);
+                    });
+            })
+            .catch((err) => {
+                console.log("Last.fm failed for", trackinfo["name"], "- trying iTunes");
+                return itunesImageSearch(trackinfo["name"], trackinfo["artist"]["name"])
+                    .then((img) => {
+                        console.log("iTunes image for", trackinfo["name"], img);
+                        if (img && !isPlaceholder(img)) return img;
                         return FALLBACK_IMG;
                     });
             });
