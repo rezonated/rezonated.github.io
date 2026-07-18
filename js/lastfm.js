@@ -33,7 +33,7 @@ $(document).ready(function () {
     }
 
     function deezerImageSearch(track, artist) {
-        var query = "artist:\"" + encodeURIComponent(artist) + "\" track:\"" + encodeURIComponent(track) + "\"";
+        var query = encodeURIComponent(track + " " + artist);
         return fetch("https://api.deezer.com/search/track?q=" + query + "&limit=1")
             .then((response) => {
                 if (response.ok) return response.json();
